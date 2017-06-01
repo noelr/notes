@@ -1,3 +1,13 @@
+# Notes
+
+Notes and reminders. This is not production ready. This isn't even ready to learn from it since the implemtation is super naive.
+
+It is fit to explore where it should go.
+
+## Vision
+
+Keep track of your expenses, coffee drinking habbit, shopping list or even as a diary.
+
 # Web
 
 To start your Phoenix app:
