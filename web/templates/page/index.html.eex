@@ -1,0 +1,46 @@
+<%= form_for @conn, "/", [as: :note], fn f -> %>
+  <div class="input-group">
+    <%= text_input f, :line, class: "form-control", autofocus: true, autocomplete: "off", list: "completions" %>
+    <span class="input-group-btn">
+      <%= submit "Note", class: "btn btn-primary" %>
+    </span>
+  </div>
+<% end %>
+
+<datalist id="completions">
+  <%= for completion <- @completions do %>
+    <option value="<%= completion %>">
+  <% end %>
+</datalist>
+
+<ul class="list-group">
+  <%= for line <- @heute, class: "form-inline" do %>
+    <li class="list-group-item">
+      <%= form_for @conn, "/", [as: :note], fn f -> %>
+        <%= line.text %>
+        <%= hidden_input f, :line, value: line.text %>
+        <span class="pull-right">
+          <%= Timex.format!(line.timestamp, "%H:%M", :strftime) %>
+          <%= submit "+", class: "btn btn-xs btn-success" %>
+        </span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>All</h2>
+
+<ul class="list-group">
+  <%= for line <- @lines do %>
+    <li class="list-group-item">
+      <%= form_for @conn, "/", [as: :note], fn f -> %>
+        <%= line.text %>
+        <%= hidden_input f, :line, value: line.text %>
+        <span class="pull-right">
+          <%= Timex.format!(line.timestamp, "%d.%m.%y %H:%M", :strftime) %>
+          <%= submit "+", class: "btn btn-xs btn-success" %>
+        </span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
