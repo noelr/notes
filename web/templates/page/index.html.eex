@@ -15,16 +15,7 @@
 
 <ul class="list-group">
   <%= for line <- @heute, class: "form-inline" do %>
-    <li class="list-group-item">
-      <%= form_for @conn, "/", [as: :note], fn f -> %>
-        <%= line.text %>
-        <%= hidden_input f, :line, value: line.text %>
-        <span class="pull-right">
-          <%= Timex.format!(line.timestamp, "%H:%M", :strftime) %>
-          <%= submit "+", class: "btn btn-xs btn-success" %>
-        </span>
-      <% end %>
-    </li>
+    <%= render "_line.html", line: line, conn: @conn %>
   <% end %>
 </ul>
 
@@ -32,15 +23,6 @@
 
 <ul class="list-group">
   <%= for line <- @lines do %>
-    <li class="list-group-item">
-      <%= form_for @conn, "/", [as: :note], fn f -> %>
-        <%= line.text %>
-        <%= hidden_input f, :line, value: line.text %>
-        <span class="pull-right">
-          <%= Timex.format!(line.timestamp, "%d.%m.%y %H:%M", :strftime) %>
-          <%= submit "+", class: "btn btn-xs btn-success" %>
-        </span>
-      <% end %>
-    </li>
+    <%= render "_line.html", line: line, conn: @conn %>
   <% end %>
 </ul>
