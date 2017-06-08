@@ -1,9 +1,11 @@
 <li class="list-group-item">
   <%= form_for @conn, "/", [as: :note], fn f -> %>
-    <%= @line.text %>
+    <a href="<%= page_path(@conn, :show, @line.text) %>">
+      <%= @line.text %>
+    </a>
     <%= hidden_input f, :line, value: @line.text %>
     <span class="pull-right">
-      <%= Timex.format!(@line.timestamp, "%H:%M", :strftime) %>
+      <%= Timex.format!(@line.timestamp, @format, :strftime) %>
       <%= submit "+", class: "btn btn-xs btn-success" %>
     </span>
   <% end %>

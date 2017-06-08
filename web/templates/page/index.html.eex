@@ -15,7 +15,7 @@
 
 <ul class="list-group">
   <%= for line <- @heute, class: "form-inline" do %>
-    <%= render "_line.html", line: line, conn: @conn %>
+    <%= render "_line.html", line: line, conn: @conn, format: "%H:%M" %>
   <% end %>
 </ul>
 
@@ -23,6 +23,6 @@
 
 <ul class="list-group">
   <%= for line <- @lines do %>
-    <%= render "_line.html", line: line, conn: @conn %>
+    <%= render "_line.html", line: line, conn: @conn, format: "%d.%m.%y %H:%M" %>
   <% end %>
 </ul>

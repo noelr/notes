@@ -1,0 +1,19 @@
+<a href="<%= page_path(@conn, :index) %>">
+  Back
+</a>
+<ul class="list-group">
+  <li class="list-group-item">Total: <%= @stats.count %></li>
+  <li class="list-group-item">In: <%= @stats.duration %> days</li>
+  <li class="list-group-item">Average: <%= @stats.average %></li>
+</ul>
+
+<%= form_for @conn, "/", [as: :note], fn f -> %>
+  <%= hidden_input f, :line, value: @id %>
+  <%= submit "Add new", class: "btn btn-success" %>
+<% end %>
+
+<ul class="list-group">
+  <%= for line <- @lines do %>
+    <li class="list-group-item"><%= Timex.format!(line.timestamp, "%d.%m.%y %H:%M", :strftime) %></li>
+  <% end %>
+</ul>

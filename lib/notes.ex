@@ -13,6 +13,14 @@ defmodule Notes do
     GenServer.call(__MODULE__, :all)
   end
 
+  def find(line) do
+    GenServer.call(__MODULE__, {:find, line})
+  end
+
+  def stats(lines) do
+    GenServer.call(__MODULE__, {:stats, lines})
+  end
+
   def heute do
     GenServer.call(__MODULE__, :heute)
   end
@@ -41,6 +49,21 @@ defmodule Notes do
 
   def handle_call(:all, _from, state) do
     {:reply, state, state}
+  end
+
+  def handle_call({:find, line}, _from, state) do
+    lines = Enum.filter(state, fn(l) -> l.text == line end)
+    {:reply, lines, state}
+  end
+
+  def handle_call({:stats, lines}, _from, state) do
+    count = Enum.count(lines)
+    days = Enum.map lines, fn(l) -> l.timestamp end
+    {:ok, first} = Enum.fetch(days, count - 1)
+    {:ok, last} = Enum.fetch(days, 0)
+    duration = Timex.diff(last, first, :days) + 1
+    average = count / duration
+    {:reply, %{count: count, duration: duration, average: average}, state}
   end
 
   def handle_call(:heute, _from, state) do

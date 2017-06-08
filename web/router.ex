@@ -18,6 +18,7 @@ defmodule Web.Router do
 
     get "/", PageController, :index
     post "/", PageController, :create
+    resources "/stats", PageController, only: [:show]
   end
 
   # Other scopes may use custom stacks.
